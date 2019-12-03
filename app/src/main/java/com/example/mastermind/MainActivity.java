@@ -3,8 +3,14 @@ package com.example.mastermind;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.Button;
+
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.Bitmap;
+
 
 public class MainActivity extends AppCompatActivity {
 
