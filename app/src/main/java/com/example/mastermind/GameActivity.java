@@ -16,5 +16,12 @@ public class GameActivity extends AppCompatActivity {
 
         Button quit = findViewById(R.id.quit);
         quit.setOnClickListener(unused -> startActivity(new Intent(this, MainActivity.class)));
+
+        Button redCircle = findViewById(R.id.red_circle);
+        redCircle.setOnClickListener(unused -> circleClicked(Constants.CircleColor.RED));
+    }
+
+    private void circleClicked(int color) {
+
     }
 }
