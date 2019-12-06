@@ -2,12 +2,16 @@ package com.example.mastermind;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.widget.Button;
 
 
 public class GameActivity extends AppCompatActivity {
+
+    Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +50,10 @@ public class GameActivity extends AppCompatActivity {
 
         Button guess4 = findViewById(R.id.guess4);
         guess4.setOnClickListener(unused -> deleteGuess(Constants.Guess.GUESS4));
+
+        if (vibrator.hasVibrator()) {
+            vibrator.vibrate(new long[]{0,400,800,600,800,800,800,1000}, -1); // for 500 ms
+        }
     }
 
     private void guessClicked(int color) {
