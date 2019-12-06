@@ -2,12 +2,17 @@
 package com.example.mastermind;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.res.ResourcesCompat;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
+import android.view.View;
 import android.widget.Button;
 
 
@@ -15,10 +20,14 @@ public class GameActivity extends AppCompatActivity {
 
     private Vibrator vibrator;
 
+    private int numGuessesClicked;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+
+        numGuessesClicked = 0;
 
         Button quit = findViewById(R.id.quit);
         quit.setOnClickListener(unused -> startActivity(new Intent(this, MainActivity.class)));
@@ -42,16 +51,19 @@ public class GameActivity extends AppCompatActivity {
         purpleCircle.setOnClickListener(unused -> guessClicked(Constants.CircleColor.PURPLE));
 
         Button guess1 = findViewById(R.id.guess1);
-        guess1.setOnClickListener(unused -> deleteGuess(Constants.Guess.GUESS1));
-
         Button guess2 = findViewById(R.id.guess2);
-        guess2.setOnClickListener(unused -> deleteGuess(Constants.Guess.GUESS2));
-
         Button guess3 = findViewById(R.id.guess3);
-        guess3.setOnClickListener(unused -> deleteGuess(Constants.Guess.GUESS3));
-
         Button guess4 = findViewById(R.id.guess4);
+
+        guess1.setOnClickListener(unused -> deleteGuess(Constants.Guess.GUESS1));
+        guess2.setOnClickListener(unused -> deleteGuess(Constants.Guess.GUESS2));
+        guess3.setOnClickListener(unused -> deleteGuess(Constants.Guess.GUESS3));
         guess4.setOnClickListener(unused -> deleteGuess(Constants.Guess.GUESS4));
+
+        guess1.setVisibility(View.INVISIBLE);
+        guess2.setVisibility(View.INVISIBLE);
+        guess3.setVisibility(View.INVISIBLE);
+        guess4.setVisibility(View.INVISIBLE);
 
         vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
@@ -61,8 +73,37 @@ public class GameActivity extends AppCompatActivity {
 
     private void guessClicked(int color) {
         System.out.println("pressed circle: " + color);
-    }
 
+        Button guess1 = findViewById(R.id.guess1);
+        Button guess2 = findViewById(R.id.guess2);
+        Button guess3 = findViewById(R.id.guess3);
+        Button guess4 = findViewById(R.id.guess4);
+
+        if (numGuessesClicked == 0) {
+            guess1.setBackground(setColor(color));
+            guess1.setVisibility(View.VISIBLE);
+
+            numGuessesClicked++;
+
+        } else if (numGuessesClicked == 1) {
+            guess2.setBackground(setColor(color));
+            guess2.setVisibility(View.VISIBLE);
+
+            numGuessesClicked++;
+
+        } else if (numGuessesClicked == 2) {
+            guess3.setBackground(setColor(color));
+            guess3.setVisibility(View.VISIBLE);
+
+            numGuessesClicked++;
+
+        } else if (numGuessesClicked == 3) {
+            guess4.setBackground(setColor(color));
+            guess4.setVisibility(View.VISIBLE);
+
+            numGuessesClicked++;
+        }
+    }
 
     private void deleteGuess(int choice) {
         System.out.println("pressed guess: " + choice);
@@ -98,6 +139,36 @@ public class GameActivity extends AppCompatActivity {
         if (vibrator.hasAmplitudeControl()) {
             VibrationEffect effect = VibrationEffect.createWaveform(mVibratePattern, mAmplitudes, -1);
             vibrator.vibrate(effect);
+        }
+    }
+
+    private Drawable setColor(int color) {
+
+        Resources res = getResources();
+        Drawable red_circle = ResourcesCompat.getDrawable(res, R.drawable.red_circle, null);
+        Drawable orange_circle = ResourcesCompat.getDrawable(res, R.drawable.orange_circle, null);
+        Drawable yellow_circle = ResourcesCompat.getDrawable(res, R.drawable.yellow_circle, null);
+        Drawable green_circle = ResourcesCompat.getDrawable(res, R.drawable.green_circle, null);
+        Drawable blue_circle = ResourcesCompat.getDrawable(res, R.drawable.blue_circle, null);
+        Drawable purple_circle = ResourcesCompat.getDrawable(res, R.drawable.purple_circle, null);
+
+        if (color == Constants.CircleColor.RED) {
+            return (red_circle);
+
+        } else if (color == Constants.CircleColor.ORANGE) {
+            return (orange_circle);
+
+        } else if (color == Constants.CircleColor.YELLOW) {
+            return (yellow_circle);
+
+        } else if (color == Constants.CircleColor.GREEN) {
+            return (green_circle);
+
+        } else if (color == Constants.CircleColor.BLUE) {
+            return (blue_circle);
+
+        } else {
+            return (purple_circle);
         }
     }
 }
