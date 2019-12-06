@@ -109,7 +109,7 @@
             android:layout_height="25dp"
             android:layout_alignStart="@id/imageView"
             android:layout_alignBottom="@id/imageView"
-            android:layout_marginStart="103dp"
+            android:layout_marginStart="101dp"
             android:layout_marginBottom="33dp"
             android:background="@drawable/red_circle" />
 
@@ -117,9 +117,9 @@
             android:id="@+id/guess2"
             android:layout_width="25dp"
             android:layout_height="25dp"
-            android:layout_alignStart="@id/imageView"
+            android:layout_alignStart="@id/guess1"
             android:layout_alignBottom="@id/imageView"
-            android:layout_marginStart="132dp"
+            android:layout_marginStart="30dp"
             android:layout_marginBottom="33dp"
             android:background="@drawable/red_circle" />
 
@@ -127,9 +127,9 @@
             android:id="@+id/guess3"
             android:layout_width="25dp"
             android:layout_height="25dp"
-            android:layout_alignStart="@id/imageView"
+            android:layout_alignStart="@id/guess2"
             android:layout_alignBottom="@id/imageView"
-            android:layout_marginStart="161dp"
+            android:layout_marginStart="30dp"
             android:layout_marginBottom="33dp"
             android:background="@drawable/red_circle" />
 
@@ -137,9 +137,9 @@
             android:id="@+id/guess4"
             android:layout_width="25dp"
             android:layout_height="25dp"
-            android:layout_alignStart="@id/imageView"
+            android:layout_alignStart="@id/guess3"
             android:layout_alignBottom="@id/imageView"
-            android:layout_marginStart="190dp"
+            android:layout_marginStart="30dp"
             android:layout_marginBottom="33dp"
             android:background="@drawable/red_circle" />
 
