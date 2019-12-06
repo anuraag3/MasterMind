@@ -11,4 +11,10 @@ public class Constants {
         static final int PURPLE = 5;
     }
 
+    class Guess {
+        static final int GUESS1 = 1;
+        static final int GUESS2 = 2;
+        static final int GUESS3 = 3;
+        static final int GUESS4 = 4;
+    }
 }
