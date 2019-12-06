@@ -7,7 +7,6 @@ import androidx.core.content.res.ResourcesCompat;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.VibrationEffect;
@@ -22,12 +21,18 @@ public class GameActivity extends AppCompatActivity {
 
     private int numGuessesClicked;
 
+    private boolean[] guessesChosen;
+
+    private int[] guessesColor;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
         numGuessesClicked = 0;
+        guessesChosen = new boolean[4];
+        guessesColor = new int[4];
 
         Button quit = findViewById(R.id.quit);
         quit.setOnClickListener(unused -> startActivity(new Intent(this, MainActivity.class)));
@@ -78,35 +83,109 @@ public class GameActivity extends AppCompatActivity {
         Button guess2 = findViewById(R.id.guess2);
         Button guess3 = findViewById(R.id.guess3);
         Button guess4 = findViewById(R.id.guess4);
-
+        /*
         if (numGuessesClicked == 0) {
             guess1.setBackground(setColor(color));
             guess1.setVisibility(View.VISIBLE);
 
             numGuessesClicked++;
+            guessesChosen[0] = true;
+            guessesColor[0] = color;
 
         } else if (numGuessesClicked == 1) {
             guess2.setBackground(setColor(color));
             guess2.setVisibility(View.VISIBLE);
 
             numGuessesClicked++;
+            guessesChosen[1] = true;
+            guessesColor[1] = color;
 
         } else if (numGuessesClicked == 2) {
             guess3.setBackground(setColor(color));
             guess3.setVisibility(View.VISIBLE);
 
             numGuessesClicked++;
+            guessesChosen[2] = true;
+            guessesColor[2] = color;
 
         } else if (numGuessesClicked == 3) {
             guess4.setBackground(setColor(color));
             guess4.setVisibility(View.VISIBLE);
 
             numGuessesClicked++;
+            guessesChosen[3] = true;
+            guessesColor[3] = color;
+
+        } else {*/
+        for (int i = 0; i < guessesChosen.length; i++) {
+            if (!guessesChosen[i]) {
+                if (i == 0) {
+                    guess1.setBackground(setColor(color));
+                    guess1.setVisibility(View.VISIBLE);
+
+                    numGuessesClicked++;
+                    guessesChosen[0] = true;
+                    guessesColor[0] = color;
+                    break;
+
+                } else if (i == 1) {
+                    guess2.setBackground(setColor(color));
+                    guess2.setVisibility(View.VISIBLE);
+
+                    numGuessesClicked++;
+                    guessesChosen[1] = true;
+                    guessesColor[1] = color;
+                    break;
+
+                } else if (i == 2) {
+                    guess3.setBackground(setColor(color));
+                    guess3.setVisibility(View.VISIBLE);
+
+                    numGuessesClicked++;
+                    guessesChosen[2] = true;
+                    guessesColor[2] = color;
+                    break;
+
+                } else {
+                    guess4.setBackground(setColor(color));
+                    guess4.setVisibility(View.VISIBLE);
+
+                    numGuessesClicked++;
+                    guessesChosen[3] = true;
+                    guessesColor[3] = color;
+                    break;
+                }
+            }
         }
+        //}
     }
 
     private void deleteGuess(int choice) {
         System.out.println("pressed guess: " + choice);
+
+        Button guess1 = findViewById(R.id.guess1);
+        Button guess2 = findViewById(R.id.guess2);
+        Button guess3 = findViewById(R.id.guess3);
+        Button guess4 = findViewById(R.id.guess4);
+
+        if (choice <= numGuessesClicked) {
+            if (choice == 1) {
+                guess1.setVisibility(View.INVISIBLE);
+                guessesChosen[0] = false;
+
+            } else if (choice == 2) {
+                guess2.setVisibility(View.INVISIBLE);
+                guessesChosen[1] = false;
+
+            } else if (choice == 3) {
+                guess3.setVisibility(View.INVISIBLE);
+                guessesChosen[2] = false;
+
+            } else {
+                guess4.setVisibility(View.INVISIBLE);
+                guessesChosen[3] = false;
+            }
+        }
     }
 
 

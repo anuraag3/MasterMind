@@ -36,10 +36,12 @@
 
         <ImageView
             android:id="@+id/imageView"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="550dp"
             android:layout_below="@+id/title"
-            android:layout_marginTop="15dp"
+            android:layout_centerInParent="true"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="45dp"
             android:contentDescription="gameBoard"
             app:srcCompat="@drawable/background_main" />
 
@@ -49,8 +51,7 @@
             android:layout_height="50dp"
             android:layout_marginStart="320dp"
             android:layout_marginTop="150dp"
-            android:background="@drawable/red_circle"
-            android:text="" />
+            android:background="@drawable/red_circle" />
 
         <Button
             android:id="@+id/orange_circle"
@@ -59,8 +60,7 @@
             android:layout_below="@id/red_circle"
             android:layout_marginStart="320dp"
             android:layout_marginTop="20dp"
-            android:background="@drawable/orange_circle"
-            android:text="" />
+            android:background="@drawable/orange_circle" />
 
         <Button
             android:id="@+id/yellow_circle"
@@ -69,8 +69,7 @@
             android:layout_below="@id/orange_circle"
             android:layout_marginStart="320dp"
             android:layout_marginTop="20dp"
-            android:background="@drawable/yellow_circle"
-            android:text="" />
+            android:background="@drawable/yellow_circle" />
 
 
         <Button
@@ -80,8 +79,7 @@
             android:layout_below="@id/yellow_circle"
             android:layout_marginStart="320dp"
             android:layout_marginTop="20dp"
-            android:background="@drawable/green_circle"
-            android:text="" />
+            android:background="@drawable/green_circle" />
 
         <Button
             android:id="@+id/blue_circle"
@@ -90,8 +88,7 @@
             android:layout_below="@+id/green_circle"
             android:layout_marginStart="320dp"
             android:layout_marginTop="20dp"
-            android:background="@drawable/blue_circle"
-            android:text="" />
+            android:background="@drawable/blue_circle" />
 
         <Button
             android:id="@+id/purple_circle"
@@ -100,27 +97,28 @@
             android:layout_below="@+id/blue_circle"
             android:layout_marginStart="320dp"
             android:layout_marginTop="20dp"
-            android:background="@drawable/purple_circle"
-            android:text="" />
+            android:background="@drawable/purple_circle" />
 
         <Button
             android:id="@+id/guess1"
             android:layout_width="25dp"
             android:layout_height="25dp"
-            android:layout_alignStart="@id/imageView"
             android:layout_alignBottom="@id/imageView"
-            android:layout_marginStart="101dp"
+            android:layout_alignStart="@id/imageView"
+            android:layout_marginStart="24dp"
             android:layout_marginBottom="33dp"
-            android:background="@drawable/red_circle" />
+            android:background="@drawable/red_circle"
+            app:layout_constraintEnd_toEndOf="@id/imageView"
+            app:layout_constraintRight_toRightOf="@id/imageView" />
 
         <Button
             android:id="@+id/guess2"
             android:layout_width="25dp"
             android:layout_height="25dp"
-            android:layout_alignStart="@id/guess1"
             android:layout_alignBottom="@id/imageView"
-            android:layout_marginStart="30dp"
-            android:layout_marginBottom="33dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginBottom="34dp"
+            android:layout_toEndOf="@+id/guess1"
             android:background="@drawable/red_circle" />
 
         <Button
