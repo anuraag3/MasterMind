@@ -14,6 +14,8 @@ import android.os.Vibrator;
 import android.view.View;
 import android.widget.Button;
 
+import java.util.List;
+
 
 public class GameActivity extends AppCompatActivity {
 
@@ -25,6 +27,10 @@ public class GameActivity extends AppCompatActivity {
 
     private int[] guessesColor;
 
+    private List<int[]> guessHistory;
+
+    private int[] answer;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,9 +39,13 @@ public class GameActivity extends AppCompatActivity {
         numGuessesClicked = 0;
         guessesChosen = new boolean[4];
         guessesColor = new int[4];
+        answer = generateAnswer();
 
         Button quit = findViewById(R.id.quit);
         quit.setOnClickListener(unused -> startActivity(new Intent(this, MainActivity.class)));
+
+        Button check = findViewById(R.id.check);
+        check.setOnClickListener(unused -> checkGuess());
 
         Button redCircle = findViewById(R.id.red_circle);
         redCircle.setOnClickListener(unused -> guessClicked(Constants.CircleColor.RED));
@@ -65,11 +75,6 @@ public class GameActivity extends AppCompatActivity {
         guess3.setOnClickListener(unused -> deleteGuess(Constants.Guess.GUESS3));
         guess4.setOnClickListener(unused -> deleteGuess(Constants.Guess.GUESS4));
 
-        guess1.setVisibility(View.INVISIBLE);
-        guess2.setVisibility(View.INVISIBLE);
-        guess3.setVisibility(View.INVISIBLE);
-        guess4.setVisibility(View.INVISIBLE);
-
         vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
         phoneVibrate(5);
@@ -83,40 +88,7 @@ public class GameActivity extends AppCompatActivity {
         Button guess2 = findViewById(R.id.guess2);
         Button guess3 = findViewById(R.id.guess3);
         Button guess4 = findViewById(R.id.guess4);
-        /*
-        if (numGuessesClicked == 0) {
-            guess1.setBackground(setColor(color));
-            guess1.setVisibility(View.VISIBLE);
 
-            numGuessesClicked++;
-            guessesChosen[0] = true;
-            guessesColor[0] = color;
-
-        } else if (numGuessesClicked == 1) {
-            guess2.setBackground(setColor(color));
-            guess2.setVisibility(View.VISIBLE);
-
-            numGuessesClicked++;
-            guessesChosen[1] = true;
-            guessesColor[1] = color;
-
-        } else if (numGuessesClicked == 2) {
-            guess3.setBackground(setColor(color));
-            guess3.setVisibility(View.VISIBLE);
-
-            numGuessesClicked++;
-            guessesChosen[2] = true;
-            guessesColor[2] = color;
-
-        } else if (numGuessesClicked == 3) {
-            guess4.setBackground(setColor(color));
-            guess4.setVisibility(View.VISIBLE);
-
-            numGuessesClicked++;
-            guessesChosen[3] = true;
-            guessesColor[3] = color;
-
-        } else {*/
         for (int i = 0; i < guessesChosen.length; i++) {
             if (!guessesChosen[i]) {
                 if (i == 0) {
@@ -157,7 +129,6 @@ public class GameActivity extends AppCompatActivity {
                 }
             }
         }
-        //}
     }
 
     private void deleteGuess(int choice) {
@@ -188,12 +159,44 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
+    private void checkGuess() {
+        if (numGuessesClicked < 4) {
+            return;
+        }
+
+        Button[][] buttons = new Button[10][4];
+
+        for (int i = 0; i < buttons.length; i++) {
+            for (int j = 0; j < buttons[i].length; j++) {
+                String buttonID = "row" + (i + 1) + "circle" + (j + 1);
+                int resID = getResources().getIdentifier(buttonID, "id", getPackageName());
+                buttons[i][j] = findViewById(resID);
+                buttons[i][j].setVisibility(View.VISIBLE);
+            }
+        }
+
+        Button guess1 = findViewById(R.id.guess1);
+        Button guess2 = findViewById(R.id.guess2);
+        Button guess3 = findViewById(R.id.guess3);
+        Button guess4 = findViewById(R.id.guess4);
+        numGuessesClicked = 0;
+
+        guess1.setVisibility(View.INVISIBLE);
+        guess2.setVisibility(View.INVISIBLE);
+        guess3.setVisibility(View.INVISIBLE);
+        guess4.setVisibility(View.INVISIBLE);
+
+        for (int i = 0 ; i < guessesChosen.length; i++) {
+            guessesChosen[i] = false;
+        }
+
+        //guessHistory.add(guessesColor);
+    }
 
     /**
      * Uses the vibrator to create a vibration that repeats 3 times with the specified intensity.
      * @param intensity the intensity of vibration between 1 (weakest) and 10 (strongest).
      */
-
     private void phoneVibrate(int intensity) {
 
         int actualIntensity = 0;
@@ -249,5 +252,16 @@ public class GameActivity extends AppCompatActivity {
         } else {
             return (purple_circle);
         }
+    }
+
+    private int[] generateAnswer() {
+        int[] toReturn = new int[4];
+
+        for (int i = 0; i < toReturn.length; i++) {
+            toReturn[i] = (int)(Math.random () * 6);
+            System.out.print(toReturn[i] + " ");
+        }
+
+        return toReturn;
     }
 }
