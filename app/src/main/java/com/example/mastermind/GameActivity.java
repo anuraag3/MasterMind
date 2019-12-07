@@ -14,6 +14,7 @@ import android.os.Vibrator;
 import android.view.View;
 import android.widget.Button;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -38,7 +39,14 @@ public class GameActivity extends AppCompatActivity {
 
         numGuessesClicked = 0;
         guessesChosen = new boolean[4];
+
         guessesColor = new int[4];
+        for (int i = 0; i < 4; i++) {
+            guessesColor[i] = 0;
+        }
+        printArray(guessesColor);
+
+        guessHistory = new ArrayList<>();
         answer = generateAnswer();
 
         Button quit = findViewById(R.id.quit);
@@ -98,6 +106,8 @@ public class GameActivity extends AppCompatActivity {
                     numGuessesClicked++;
                     guessesChosen[0] = true;
                     guessesColor[0] = color;
+
+                    printArray(guessesColor);
                     break;
 
                 } else if (i == 1) {
@@ -107,6 +117,8 @@ public class GameActivity extends AppCompatActivity {
                     numGuessesClicked++;
                     guessesChosen[1] = true;
                     guessesColor[1] = color;
+
+                    printArray(guessesColor);
                     break;
 
                 } else if (i == 2) {
@@ -116,6 +128,8 @@ public class GameActivity extends AppCompatActivity {
                     numGuessesClicked++;
                     guessesChosen[2] = true;
                     guessesColor[2] = color;
+
+                    printArray(guessesColor);
                     break;
 
                 } else {
@@ -125,6 +139,8 @@ public class GameActivity extends AppCompatActivity {
                     numGuessesClicked++;
                     guessesChosen[3] = true;
                     guessesColor[3] = color;
+
+                    printArray(guessesColor);
                     break;
                 }
             }
@@ -171,7 +187,6 @@ public class GameActivity extends AppCompatActivity {
                 String buttonID = "row" + (i + 1) + "circle" + (j + 1);
                 int resID = getResources().getIdentifier(buttonID, "id", getPackageName());
                 buttons[i][j] = findViewById(resID);
-                buttons[i][j].setVisibility(View.VISIBLE);
             }
         }
 
@@ -186,11 +201,39 @@ public class GameActivity extends AppCompatActivity {
         guess3.setVisibility(View.INVISIBLE);
         guess4.setVisibility(View.INVISIBLE);
 
+        // for making a copy of color array
+        int[] temp = new int[4];
+
+        // for reseting conditions
         for (int i = 0 ; i < guessesChosen.length; i++) {
             guessesChosen[i] = false;
+            temp[i] = guessesColor[i];
         }
 
-        //guessHistory.add(guessesColor);
+        guessHistory.add(temp);
+
+        // displaying guessHistory
+        for (int i = 0; i < guessHistory.size(); i++) {
+            printArray(guessHistory.get(i));
+            for (int j = 0; j < buttons[i].length; j++) {
+                buttons[9 - i][j].setBackground(setColor((guessHistory.get(i))[j]));
+                buttons[9 - i][j].setVisibility(View.VISIBLE);
+            }
+        }
+
+        /*
+        for (int i = 0; i < guessHistory.size(); i++) {
+            for (int j = 0;)
+        }*/
+    }
+
+    private void printArray(int[] bruh) {
+        String output = "";
+        for (int i = 0; i < bruh.length; i++) {
+            output = output + bruh[i] + " ";
+        }
+
+        System.out.println(output);
     }
 
     /**
