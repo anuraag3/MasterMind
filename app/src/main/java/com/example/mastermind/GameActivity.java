@@ -1,6 +1,7 @@
 
 package com.example.mastermind;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;
 
@@ -12,8 +13,13 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -246,6 +252,7 @@ public class GameActivity extends AppCompatActivity {
         }
 
         if (numCorrectPosition == 4) {
+
             userWins(temp);
         }
     }
@@ -358,11 +365,36 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
-    /** Still not completed
-     * Need to end game state too
-     **/
     private void userWins(int[] guess) {
         System.out.println("You Win!");
+
+        LayoutInflater inflater = LayoutInflater.from(this);
+        ViewGroup container = findViewById(R.id.winLayout);
+        View rootview = inflater.inflate(R.layout.win_display, container,false);
+
+        Button[] winCircles = new Button[4];
+
+        for (int i = 0; i < winCircles.length; i++) {
+            String buttonID = "win" + (i + 1);
+            int resID = getResources().getIdentifier(buttonID, "id", getPackageName());
+            winCircles[i] = rootview.findViewById(resID);
+        }
+
+
+        for (int i = 0; i < guess.length; i++) {
+            winCircles[i].setBackground(setColor(guess[i]));
+        }
+
+        TextView winMessage = rootview.findViewById(R.id.win_message);
+        winMessage.setText("Number of Guesses: " + guessHistory.size());
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        builder.setView(rootview);
+
+        builder.setNegativeButton("Finish", null);
+        builder.setOnDismissListener(unused -> finish());
+        builder.create().show();
     }
 
     private int[] generateAnswer() {

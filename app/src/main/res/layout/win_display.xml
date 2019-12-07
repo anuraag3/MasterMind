@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/winLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:id="@+id/margins2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" >
+
+        <TextView
+            android:id="@+id/winText"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/font_header"
+            android:gravity="center"
+            android:text="YOU WIN!" />
+
+        <Button
+            android:id="@+id/win1"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="65dp"
+            android:background="@drawable/red_circle" />
+
+        <Button
+            android:id="@+id/win2"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="65dp"
+            android:layout_toEndOf="@+id/win1"
+            android:background="@drawable/red_circle" />
+
+        <Button
+            android:id="@+id/win3"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="65dp"
+            android:layout_toEndOf="@+id/win2"
+            android:background="@drawable/red_circle" />
+
+        <Button
+            android:id="@+id/win4"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="65dp"
+            android:layout_toEndOf="@+id/win3"
+            android:background="@drawable/red_circle" />
+
+        <TextView
+            android:id="@+id/win_message"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginTop="35dp"
+            android:layout_below="@+id/win1"
+            android:fontFamily="@font/font_header"
+            android:gravity="center"
+            android:text="" />
+
+    </RelativeLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
