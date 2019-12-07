@@ -7,6 +7,17 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <ImageView
+        android:id="@+id/wallpaper"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY"
+        android:layout_centerInParent="true"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:contentDescription="wallpaper"
+        app:srcCompat="@drawable/background_game" />
+
     <RelativeLayout
         android:id="@+id/margins"
         android:layout_width="match_parent"
@@ -22,8 +33,9 @@
             android:id="@+id/title"
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:fontFamily="@font/font_header"
+            android:fontFamily="@font/new_font"
             android:gravity="center"
+            android:textSize="40dp"
             android:text="MASTERMIND" />
 
         <Button

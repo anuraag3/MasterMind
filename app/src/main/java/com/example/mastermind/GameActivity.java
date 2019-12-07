@@ -8,7 +8,6 @@ import androidx.core.content.res.ResourcesCompat;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
-import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.VibrationEffect;
@@ -48,10 +47,6 @@ public class GameActivity extends AppCompatActivity {
         guessesChosen = new boolean[4];
 
         guessesColor = new int[4];
-        for (int i = 0; i < 4; i++) {
-            guessesColor[i] = 0;
-        }
-        printArray(guessesColor);
 
         guessHistory = new ArrayList<>();
         answer = generateAnswer();
@@ -91,9 +86,6 @@ public class GameActivity extends AppCompatActivity {
         guess4.setOnClickListener(unused -> deleteGuess(Constants.Guess.GUESS4));
 
         vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-
-        phoneVibrate(5);
-        phoneVibrate(10);
     }
 
     private void guessClicked(int color) {
@@ -251,9 +243,13 @@ public class GameActivity extends AppCompatActivity {
             results[11 - guessHistory.size()][numCorrectPosition + i].setVisibility(View.VISIBLE);
         }
 
+        // win condition
         if (numCorrectPosition == 4) {
-
             userWins(temp);
+        } else if (guessHistory.size() == 10) {
+            userLoses();
+        } else {
+            phoneVibrate(1);
         }
     }
 
@@ -303,31 +299,14 @@ public class GameActivity extends AppCompatActivity {
 
     /**
      * Uses the vibrator to create a vibration that repeats 3 times with the specified intensity.
-     * @param intensity the intensity of vibration between 1 (weakest) and 10 (strongest).
+     * @param count the number of times it vibrates.
      */
-    private void phoneVibrate(int intensity) {
-
-        int actualIntensity = 0;
-
-        switch(intensity) {
-            case 1: actualIntensity = 25;
-            case 2: actualIntensity = 50;
-            case 3: actualIntensity = 75;
-            case 4: actualIntensity = 100;
-            case 5: actualIntensity = 125;
-            case 6: actualIntensity = 150;
-            case 7: actualIntensity = 175;
-            case 8: actualIntensity = 200;
-            case 9: actualIntensity = 225;
-            case 10: actualIntensity = 255;
-            default: actualIntensity = 255;
-        }
-
-        long[] mVibratePattern = new long[]{0, 400, 400, 400, 400, 400, 400, 400};
-        int[] mAmplitudes = new int[]{0, actualIntensity, 0, actualIntensity, 0, actualIntensity, 0, actualIntensity};
-
-        if (vibrator.hasAmplitudeControl()) {
-            VibrationEffect effect = VibrationEffect.createWaveform(mVibratePattern, mAmplitudes, -1);
+    private void phoneVibrate(int count) {
+        if (count == 1) {
+            VibrationEffect effect = VibrationEffect.createWaveform(new long[] {0, 400, 400}, new int[] {0, 255, 0}, -1);
+            vibrator.vibrate(effect);
+        } else if (count == 3) {
+            VibrationEffect effect = VibrationEffect.createWaveform(new long[] {0, 400, 400, 400, 400, 400, 400}, new int[] {0, 255, 0, 255, 0, 255, 0}, -1);
             vibrator.vibrate(effect);
         }
     }
@@ -368,6 +347,8 @@ public class GameActivity extends AppCompatActivity {
     private void userWins(int[] guess) {
         System.out.println("You Win!");
 
+        phoneVibrate(3);
+
         LayoutInflater inflater = LayoutInflater.from(this);
         ViewGroup container = findViewById(R.id.winLayout);
         View rootview = inflater.inflate(R.layout.win_display, container,false);
@@ -397,11 +378,24 @@ public class GameActivity extends AppCompatActivity {
         builder.create().show();
     }
 
+    private void userLoses() {
+
+        phoneVibrate(3);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        builder.setMessage("You Lose. Try Again.");
+
+        builder.setNegativeButton("Finish", null);
+        builder.setOnDismissListener(unused -> finish());
+        builder.create().show();
+    }
+
     private int[] generateAnswer() {
         int[] toReturn = new int[4];
 
         for (int i = 0; i < toReturn.length; i++) {
-            toReturn[i] = (int)(Math.random () * 6);
+            toReturn[i] = (int)(Math.random() * 6);
             System.out.print(toReturn[i] + " ");
         }
 
