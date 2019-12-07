@@ -7,6 +7,7 @@ import androidx.core.content.res.ResourcesCompat;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.VibrationEffect;
@@ -190,6 +191,16 @@ public class GameActivity extends AppCompatActivity {
             }
         }
 
+        Button[][] results = new Button[11][4];
+
+        for (int i = 0; i < results.length; i++) {
+            for (int j = 0; j < results[i].length; j++) {
+                String buttonID = "row" + i + "result" + (j + 1);
+                int resID = getResources().getIdentifier(buttonID, "id", getPackageName());
+                results[i][j] = findViewById(resID);
+            }
+        }
+
         Button guess1 = findViewById(R.id.guess1);
         Button guess2 = findViewById(R.id.guess2);
         Button guess3 = findViewById(R.id.guess3);
@@ -204,7 +215,7 @@ public class GameActivity extends AppCompatActivity {
         // for making a copy of color array
         int[] temp = new int[4];
 
-        // for reseting conditions
+        // for resetting conditions
         for (int i = 0 ; i < guessesChosen.length; i++) {
             guessesChosen[i] = false;
             temp[i] = guessesColor[i];
@@ -221,10 +232,51 @@ public class GameActivity extends AppCompatActivity {
             }
         }
 
-        /*
-        for (int i = 0; i < guessHistory.size(); i++) {
-            for (int j = 0;)
-        }*/
+        // displaying results
+        int numCorrect = findNumCorrect(temp) - findNumCorrectPosition(temp);
+        int numCorrectPosition = findNumCorrectPosition(temp);
+
+        for (int i = 0; i < numCorrectPosition; i++) {
+            results[11 - guessHistory.size()][i].setVisibility(View.VISIBLE);
+        }
+
+        for (int i = 0; i < numCorrect; i++) {
+            results[11 - guessHistory.size()][numCorrectPosition + i].setBackground(setColor(69));
+            results[11 - guessHistory.size()][numCorrectPosition + i].setVisibility(View.VISIBLE);
+        }
+
+        if (numCorrectPosition == 4) {
+            userWins(temp);
+        }
+    }
+
+    /** this doesn't work */
+    public int findNumCorrect(int[] guess) {
+        int numCorrect = 0;
+
+        for (int i = 0, j = 0; j < answer.length; i++) {
+            if (guess[i] == answer[j]) {
+                numCorrect++;
+                j++;
+            } else {
+                i = 0;
+                j++;
+            }
+        }
+
+        return numCorrect;
+    }
+
+    private int findNumCorrectPosition(int[] guess) {
+        int numCorrectPosition = 0;
+
+        for (int i = 0; i < answer.length; i++) {
+            if (answer[i] == guess[i]) {
+                numCorrectPosition++;
+            }
+        }
+
+        return numCorrectPosition;
     }
 
     private void printArray(int[] bruh) {
@@ -276,6 +328,7 @@ public class GameActivity extends AppCompatActivity {
         Drawable green_circle = ResourcesCompat.getDrawable(res, R.drawable.green_circle, null);
         Drawable blue_circle = ResourcesCompat.getDrawable(res, R.drawable.blue_circle, null);
         Drawable purple_circle = ResourcesCompat.getDrawable(res, R.drawable.purple_circle, null);
+        Drawable white_circle = ResourcesCompat.getDrawable(res, R.drawable.white_circle, null);
 
         if (color == Constants.CircleColor.RED) {
             return (red_circle);
@@ -292,9 +345,18 @@ public class GameActivity extends AppCompatActivity {
         } else if (color == Constants.CircleColor.BLUE) {
             return (blue_circle);
 
-        } else {
+        } else if (color == Constants.CircleColor.PURPLE) {
             return (purple_circle);
+        } else {
+            return (white_circle);
         }
+    }
+
+    /** Still not completed
+     * Need to end game state too
+     **/
+    private void userWins(int[] guess) {
+        System.out.println("You Win!");
     }
 
     private int[] generateAnswer() {
