@@ -250,17 +250,23 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
-    /** this doesn't work */
     public int findNumCorrect(int[] guess) {
         int numCorrect = 0;
+        boolean[] matchedPair = new boolean[4];
 
-        for (int i = 0, j = 0; j < answer.length; i++) {
-            if (guess[i] == answer[j]) {
+        for (int i : guess) {
+            if ((i == answer[0]) && (!matchedPair[0])) {
                 numCorrect++;
-                j++;
-            } else {
-                i = 0;
-                j++;
+                matchedPair[0] = true;
+            } else if ((i == answer[1]) && (!matchedPair[1])) {
+                numCorrect++;
+                matchedPair[1] = true;
+            } else if ((i == answer[2]) && (!matchedPair[2])) {
+                numCorrect++;
+                matchedPair[2] = true;
+            } else if ((i == answer[3]) && (!matchedPair[3])) {
+                numCorrect++;
+                matchedPair[3] = true;
             }
         }
 
