@@ -24,7 +24,8 @@
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:layout_marginTop="10dp"
-            android:fontFamily="@font/font_header"
+            android:fontFamily="@font/new_font"
+            android:textSize="25dp"
             android:gravity="center"
             android:text="YOU WIN!" />
 
@@ -69,7 +70,8 @@
             android:layout_height="30dp"
             android:layout_marginTop="35dp"
             android:layout_below="@+id/win1"
-            android:fontFamily="@font/font_header"
+            android:fontFamily="@font/new_font"
+            android:textSize="25dp"
             android:gravity="center"
             android:text="" />
 

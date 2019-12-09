@@ -18,8 +18,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -89,7 +87,6 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void guessClicked(int color) {
-        System.out.println("pressed circle: " + color);
 
         Button guess1 = findViewById(R.id.guess1);
         Button guess2 = findViewById(R.id.guess2);
@@ -106,7 +103,6 @@ public class GameActivity extends AppCompatActivity {
                     guessesChosen[0] = true;
                     guessesColor[0] = color;
 
-                    printArray(guessesColor);
                     break;
 
                 } else if (i == 1) {
@@ -117,7 +113,6 @@ public class GameActivity extends AppCompatActivity {
                     guessesChosen[1] = true;
                     guessesColor[1] = color;
 
-                    printArray(guessesColor);
                     break;
 
                 } else if (i == 2) {
@@ -128,7 +123,6 @@ public class GameActivity extends AppCompatActivity {
                     guessesChosen[2] = true;
                     guessesColor[2] = color;
 
-                    printArray(guessesColor);
                     break;
 
                 } else {
@@ -139,7 +133,6 @@ public class GameActivity extends AppCompatActivity {
                     guessesChosen[3] = true;
                     guessesColor[3] = color;
 
-                    printArray(guessesColor);
                     break;
                 }
             }
@@ -147,7 +140,6 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void deleteGuess(int choice) {
-        System.out.println("pressed guess: " + choice);
 
         Button guess1 = findViewById(R.id.guess1);
         Button guess2 = findViewById(R.id.guess2);
@@ -223,7 +215,6 @@ public class GameActivity extends AppCompatActivity {
 
         // displaying guessHistory
         for (int i = 0; i < guessHistory.size(); i++) {
-            printArray(guessHistory.get(i));
             for (int j = 0; j < buttons[i].length; j++) {
                 buttons[9 - i][j].setBackground(setColor((guessHistory.get(i))[j]));
                 buttons[9 - i][j].setVisibility(View.VISIBLE);
@@ -288,19 +279,6 @@ public class GameActivity extends AppCompatActivity {
         return numCorrectPosition;
     }
 
-    private void printArray(int[] bruh) {
-        String output = "";
-        for (int i = 0; i < bruh.length; i++) {
-            output = output + bruh[i] + " ";
-        }
-
-        System.out.println(output);
-    }
-
-    /**
-     * Uses the vibrator to create a vibration that repeats 3 times with the specified intensity.
-     * @param count the number of times it vibrates.
-     */
     private void phoneVibrate(int count) {
         if (count == 1) {
             VibrationEffect effect = VibrationEffect.createWaveform(new long[] {0, 400, 400}, new int[] {0, 255, 0}, -1);
@@ -345,7 +323,6 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void userWins(int[] guess) {
-        System.out.println("You Win!");
 
         phoneVibrate(3);
 
@@ -388,6 +365,7 @@ public class GameActivity extends AppCompatActivity {
 
         builder.setNegativeButton("Finish", null);
         builder.setOnDismissListener(unused -> finish());
+
         builder.create().show();
     }
 
